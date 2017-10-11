@@ -5,21 +5,21 @@ Description: RandomGeneratorService Abstract Class
  */
 
 import java.util.Date;
+import java.util.Random;
 
 public abstract class RandomGeneratorService {
 
     protected int seed = 1;
 
-    public abstract int generateOne(int lowerBound, int upperBound);    //Main algorithm
+    public abstract int generateOne(int lowerBound, int upperBound);    //Return the random number here
     public abstract void nextSeed();                                    //How the next seed is determined
     public abstract String toString();
 
     public void setSeed(int seed){
         this.seed = seed;
 
-        //Reseed this twice so that setting the seed to numbers close in value will not give the same first result
-        //My implementation of LCG has this problem, but reseeding in general shouldn't hurt any other algorithm
-        nextSeed();
+        //Reseed this once so that setting the seed to numbers close in value will not give the same first result
+        //My implementation of LCG has this problem, but reseeding shouldn't hurt any other algorithm
         nextSeed();
     }
 
@@ -87,4 +87,36 @@ public abstract class RandomGeneratorService {
 
         return result;
     }
+
+    //This is a helper function that uses java's built in random number generator along with
+    //the Miller Rabin Algorithm and Modular Exponentiation (Square and Multiply) to get a prime number
+    //from 0 to the specified range, inclusive. This is used in BlumBlumShub.
+    public int generatePrimeNumber(int lowerBound, int upperBound)
+    {
+        Random random = new Random();
+        int randomPrime = random.nextInt(upperBound - lowerBound + 1) + lowerBound;
+
+        //Run miller rabin 10 times to confirm prime (probabilistic algorithm)
+        while(!millerRabinXTimes(10, randomPrime)){
+            randomPrime = random.nextInt(upperBound - lowerBound+ 1) + lowerBound;
+        }
+        return randomPrime;
+    }
+
+    //Run miller rabin X times to check if number is prime
+    private boolean millerRabinXTimes(int numTimes, int number)
+    {
+        int i = 0;
+        while(i < numTimes)
+        {
+            if(!Utilities.millerRabin(number))
+            {
+                return false;
+            }
+            i++;
+        }
+        return true;
+    }
+
+
 }

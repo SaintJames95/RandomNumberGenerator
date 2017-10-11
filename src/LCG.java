@@ -63,12 +63,8 @@ public class LCG extends RandomGeneratorService {
             throw new IllegalArgumentException("Upper bound MUST be greater than or equal to the lower bound");
         }
 
-        int randomInt = this.seed;
-
-        randomInt = compressToRange(randomInt, lowerBound, upperBound);
-
         nextSeed();
-        return randomInt;
+        return compressToRange(this.seed, lowerBound, upperBound);
     }
 
     @Override

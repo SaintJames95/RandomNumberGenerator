@@ -8,21 +8,29 @@ import java.util.Random;
 
 public class JavaBuiltInRandom extends RandomGeneratorService {
 
+    Random random;
+
+    public JavaBuiltInRandom()
+    {
+        this.random = new Random();
+    }
+
     @Override
     public int generateOne(int lowerBound, int upperBound) {
-        Random random = new Random();
-        random.setSeed(this.seed);
 
         int randomInt = random.nextInt(Math.abs(lowerBound) + upperBound + 1);
         randomInt = compressToRange(randomInt, lowerBound, upperBound);
-
-        nextSeed();
         return randomInt;
     }
 
     @Override
     public void nextSeed() {
-        this.seed += 1;
+        //Nothing to do
+    }
+
+    @Override
+    public void setSeed(int seed) {
+        this.random.setSeed(seed);
     }
 
     @Override
