@@ -89,7 +89,14 @@ public class Utilities {
     //Checking if two integers are co-prime
     public static boolean isCoprime(int x, int y)
     {
-        return true;
+        if(Utilities.euclideanGCD(x, y) == 1)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public static int euclideanGCD(int x, int y)
@@ -108,7 +115,7 @@ public class Utilities {
     //Source: https://stackoverflow.com/questions/9117793/bitwise-most-significant-set-
     //Author: Michael McGowan
     //Desc: Gets the most significant bit of the integer passed in
-    public static int getMostSigBitPos(long number) {
+    public static int getMostSigBitPos(int number) {
         int mask = 1 << 31;
         for (int bitIndex = 31; bitIndex >= 0; bitIndex--) {
             if ((number & mask) != 0) {

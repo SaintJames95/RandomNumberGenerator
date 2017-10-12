@@ -2,6 +2,12 @@
 Author: James Sheehan
 Last Modified: 10/10/2017
 Description: RandomGeneratorService Abstract Class
+             You must implement nextSeed() and generateOne()
+             nextSeed() is simply how the next seed is defined as a function of the previous
+             generateOne() is how the seed is interpreted to produce a random integer
+             Use compressToRange(int,int,int) to map a value to a different range of numbers
+             This service includes generatePrimeNumber(int, int) as this may be a common task in PRNGs
+             It uses java's Random for this
  */
 
 import java.util.Date;
@@ -30,7 +36,7 @@ public abstract class RandomGeneratorService {
     //Sets the seed by hashing the current date to an integer
     public void setTimeStampAsSeed(){
         Date date = new Date();
-        this.seed = date.toString().hashCode();
+        this.setSeed(date.toString().hashCode());
     }
 
     //Calls "generateOne" the specified number of times and returns that many random numbers

@@ -2,6 +2,7 @@
 Author: James Sheehan
 Last Modified: 10/10/2017
 Description: Implementation of the Linear Congruential Generator using the RandomGeneratorService
+             The maximum range supported is (Integer.MIN_VALUE / 2) to (Integer.MAX_VALUE / 2) - 1
  */
 
 public class LCG extends RandomGeneratorService {
